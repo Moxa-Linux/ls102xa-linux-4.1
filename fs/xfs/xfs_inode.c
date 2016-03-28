@@ -51,6 +51,8 @@
 
 kmem_zone_t *xfs_inode_zone;
 
+#define MAX_LOCKDEP_SUBCLASSES	8UL
+
 /*
  * Used in xfs_itruncate_extents().  This is the maximum number of extents
  * freed from a file in a single transaction.
