@@ -62,3 +62,6 @@ js-rtc-y = rtc.o
 
 obj-$(CONFIG_TILE_SROM)		+= tile-srom.o
 obj-$(CONFIG_XILLYBUS)		+= xillybus/
+
+# MOXA DIO
+obj-$(CONFIG_UC8410A_DIO)       += moxa_dio/
