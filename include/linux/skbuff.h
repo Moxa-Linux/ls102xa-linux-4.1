@@ -824,6 +824,8 @@ static inline struct sk_buff *alloc_skb_fclone(unsigned int size,
 	return __alloc_skb(size, priority, SKB_ALLOC_FCLONE, NUMA_NO_NODE);
 }
 
+extern void skb_recycle(struct sk_buff *skb);
+extern bool skb_recycle_check(struct sk_buff *skb, int skb_size);
 struct sk_buff *__alloc_skb_head(gfp_t priority, int node);
 static inline struct sk_buff *alloc_skb_head(gfp_t priority)
 {
@@ -3460,5 +3462,27 @@ static inline unsigned int skb_gso_network_seglen(const struct sk_buff *skb)
 			       skb_network_header(skb);
 	return hdr_len + skb_gso_transport_seglen(skb);
 }
+
+static inline bool skb_is_recycleable(const struct sk_buff *skb, int skb_size)
+{
+        if (irqs_disabled())
+                return false;
+
+        if (skb_shinfo(skb)->tx_flags & SKBTX_DEV_ZEROCOPY)
+                return false;
+
+        if (skb_is_nonlinear(skb) || skb->fclone != SKB_FCLONE_UNAVAILABLE)
+                return false;
+
+        skb_size = SKB_DATA_ALIGN(skb_size + NET_SKB_PAD);
+        if (skb_end_pointer(skb) - skb->head < skb_size)
+                return false;
+
+        if (skb_shared(skb) || skb_cloned(skb))
+                return false;
+
+        return true;
+}
+
 #endif	/* __KERNEL__ */
 #endif	/* _LINUX_SKBUFF_H */

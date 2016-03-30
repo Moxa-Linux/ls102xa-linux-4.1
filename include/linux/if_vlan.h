@@ -30,6 +30,11 @@
 #define VLAN_ETH_DATA_LEN	1500	/* Max. octets in payload	 */
 #define VLAN_ETH_FRAME_LEN	1518	/* Max. octets in frame sans FCS */
 
+/* vlan_tx_xx functions got renamed to skb_vlan */
+#define vlan_tx_tag_get skb_vlan_tag_get
+#define vlan_tx_tag_present skb_vlan_tag_present
+#define HAVE_NDO_BRIDGE_SET_DEL_LINK_FLAGS
+
 /*
  * 	struct vlan_hdr - vlan header
  * 	@h_vlan_TCI: priority and VLAN ID
