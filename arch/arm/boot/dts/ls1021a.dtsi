@@ -171,14 +171,12 @@
 
 		sata: sata@3200000 {
 			compatible = "fsl,ls1021a-ahci";
-			reg = <0x0 0x3200000 0x0 0x10000>;
-			//reg = <0x0 0x3200000 0x0 0x10000>,
-			//      <0x0 0x20220520 0x0 0x4>;
+			reg = <0x0 0x3200000 0x0 0x10000>,
+			      <0x0 0x20220520 0x0 0x4>;
 			reg-names = "ahci", "sata-ecc";
 			interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&platform_clk 1>;
-			dma-coherent;
-			//status = "disabled";
+			status = "disabled";
 		};
 
 		scfg: scfg@1570000 {

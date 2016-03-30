@@ -361,3 +361,7 @@
 &sai1 {
 	status = "okay";
 };
+
+&sata {
+        status = "okay";
+};
