@@ -293,6 +293,7 @@
 };
 
 &uqe {
+	//status = "disabled";
 	tdma: ucc@2000 {
 		compatible = "fsl,ucc-tdm";
 		rx-clock-name = "clk8";
