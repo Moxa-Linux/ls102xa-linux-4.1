@@ -14,6 +14,9 @@
 #include "desc.h"
 #include "intern.h"
 
+#define setbits32(_addr, _v) writel((readl(_addr) | (_v)), (_addr))
+#define clrbits32(_addr, _v) writel((readl(_addr) & ~(_v)), (_addr))
+
 struct jr_driver_data {
 	/* List of Physical JobR's with the Driver */
 	struct list_head	jr_list;

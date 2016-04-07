@@ -165,7 +165,6 @@
 			bus-width = <4>;
 			sleep = <&rcpm 0x00000080 0x0>;
 			status = "disabled";
-			//status = "disabled";
 		};
 
 		sata: sata@3200000 {

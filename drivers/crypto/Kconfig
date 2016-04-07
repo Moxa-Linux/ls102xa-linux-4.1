@@ -159,6 +159,13 @@ config CRYPTO_GHASH_S390
 
 	  It is available as of z196.
 
+config CRYPTO_DEV_CRYPTODEV
+	tristate "Support for MOXA LS1021a hw accelerator"
+	depends on SOC_LS1021A
+	help
+	  This driver allows access to Linux kernel cryptographic drivers;
+	  thus allowing of userspace applications to take advantage of hardware accelerators.
+
 config CRYPTO_DEV_MV_CESA
 	tristate "Marvell's Cryptographic Engine"
 	depends on PLAT_ORION
