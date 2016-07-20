@@ -74,7 +74,7 @@ static void ls_pcie_host_init(struct pcie_port *pp)
 		usleep_range(100, 1000);
 		count++;
 		if (count >= 200) {
-			dev_err(pp->dev, "phy link never came up\n");
+			//dev_err(pp->dev, "phy link never came up\n");
 			return;
 		}
 	}
