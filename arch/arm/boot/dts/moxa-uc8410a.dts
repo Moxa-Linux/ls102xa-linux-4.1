@@ -49,7 +49,7 @@
 #include "ls1021a.dtsi"
 
 / {
-	model = "LS1021A TWR Board";
+	model = "MOXA UC8410A";
 
 	aliases {
 		enet0_rgmii_phy = &rgmii_phy0;

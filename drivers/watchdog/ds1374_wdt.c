@@ -157,10 +157,9 @@ static int ds1374_wdt_release(struct inode *inode, struct file *file)
 	if (!nowayout && (expect_close == 42)) {
 		ds1374_wdt_disable();
 		printk(KERN_CRIT "ds1374_wdt: Magic close, shut off the timer!\n");
+	} else {
+		printk(KERN_CRIT "ds1374_wdt: Unexpected close, not stopping!\n");
 	}
-	//} else {
-	//	printk(KERN_CRIT "ds1374_wdt: Unexpected close, not stopping!\n");
-	//}
 	expect_close = 0;
 
 	return 0;
@@ -267,9 +266,13 @@ static int ds1374_wdt_notify_sys(struct notifier_block *this,
 			unsigned long code, void *unused)
 {
 	/* use ds1374 reboot instead of CPU watchdog reboot */
-	if (code == SYS_DOWN || code == SYS_HALT) {
+	if (code == SYS_HALT) {
 		/* Disable Watchdog */
                 ds1374_wdt_disable(); 
+	} else if (code == SYS_RESTART) {
+		/* one second */
+		ds1374_wdt_settimeout(1*4096);
+		ds1374_wdt_ping();
 	}
 	return NOTIFY_DONE;
 }
