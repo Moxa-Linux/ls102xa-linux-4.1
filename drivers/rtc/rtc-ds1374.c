@@ -46,6 +46,8 @@
 #define DS1374_REG_SR_AF	0x01 /* Alarm Flag */
 #define DS1374_REG_TCR		0x09 /* Trickle Charge */
 
+#define CONFIG_RTC_DRV_DS1374_WDT
+
 static struct i2c_client *save_client;
 EXPORT_SYMBOL(save_client);
 static const struct i2c_device_id ds1374_id[] = {
