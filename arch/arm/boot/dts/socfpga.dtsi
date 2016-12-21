@@ -36,7 +36,6 @@
 	cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
-		enable-method = "altr,socfpga-smp";
 
 		cpu@0 {
 			compatible = "arm,cortex-a9";
@@ -164,7 +163,7 @@
 						dbg_base_clk: dbg_base_clk {
 							#clock-cells = <0>;
 							compatible = "altr,socfpga-perip-clk";
-							clocks = <&main_pll>, <&osc1>;
+							clocks = <&main_pll>;
 							div-reg = <0xe8 0 9>;
 							reg = <0x50>;
 						};
@@ -318,7 +317,7 @@
 					l3_sp_clk: l3_sp_clk {
 						#clock-cells = <0>;
 						compatible = "altr,socfpga-gate-clk";
-						clocks = <&l3_mp_clk>;
+						clocks = <&mainclk>;
 						div-reg = <0x64 2 2>;
 					};
 
@@ -349,7 +348,7 @@
 					dbg_clk: dbg_clk {
 						#clock-cells = <0>;
 						compatible = "altr,socfpga-gate-clk";
-						clocks = <&dbg_at_clk>;
+						clocks = <&dbg_base_clk>;
 						div-reg = <0x68 2 2>;
 						clk-gate = <0x60 5>;
 					};
@@ -452,14 +451,6 @@
 						clk-phase = <0 135>;
 					};
 
-					sdmmc_clk_divided: sdmmc_clk_divided {
-						#clock-cells = <0>;
-						compatible = "altr,socfpga-gate-clk";
-						clocks = <&sdmmc_clk>;
-						clk-gate = <0xa0 8>;
-						fixed-divider = <4>;
-					};
-
 					nand_x_clk: nand_x_clk {
 						#clock-cells = <0>;
 						compatible = "altr,socfpga-gate-clk";
@@ -484,13 +475,6 @@
 				};
 			};
 
-		fpgamgr0: fpgamgr@ff706000 {
-			compatible = "altr,socfpga-fpga-mgr";
-			reg = <0xff706000 0x1000
-			       0xffb90000 0x1000>;
-			interrupts = <0 175 4>;
-		};
-
 		gmac0: ethernet@ff700000 {
 			compatible = "altr,socfpga-stmmac", "snps,dwmac-3.70a", "snps,dwmac";
 			altr,sysmgr-syscon = <&sysmgr 0x60 0>;
@@ -504,8 +488,6 @@
 			reset-names = "stmmaceth";
 			snps,multicast-filter-bins = <256>;
 			snps,perfect-filter-entries = <128>;
-			tx-fifo-depth = <4096>;
-			rx-fifo-depth = <4096>;
 			status = "disabled";
 		};
 
@@ -522,8 +504,6 @@
 			reset-names = "stmmaceth";
 			snps,multicast-filter-bins = <256>;
 			snps,perfect-filter-entries = <128>;
-			tx-fifo-depth = <4096>;
-			rx-fifo-depth = <4096>;
 			status = "disabled";
 		};
 
@@ -572,7 +552,7 @@
 			#size-cells = <0>;
 			compatible = "snps,dw-apb-gpio";
 			reg = <0xff708000 0x1000>;
-			clocks = <&l4_mp_clk>;
+			clocks = <&per_base_clk>;
 			status = "disabled";
 
 			porta: gpio-controller@0 {
@@ -592,7 +572,7 @@
 			#size-cells = <0>;
 			compatible = "snps,dw-apb-gpio";
 			reg = <0xff709000 0x1000>;
-			clocks = <&l4_mp_clk>;
+			clocks = <&per_base_clk>;
 			status = "disabled";
 
 			portb: gpio-controller@0 {
@@ -612,7 +592,7 @@
 			#size-cells = <0>;
 			compatible = "snps,dw-apb-gpio";
 			reg = <0xff70a000 0x1000>;
-			clocks = <&l4_mp_clk>;
+			clocks = <&per_base_clk>;
 			status = "disabled";
 
 			portc: gpio-controller@0 {
@@ -646,8 +626,6 @@
 			cache-level = <2>;
 			arm,tag-latency = <1 1 1>;
 			arm,data-latency = <2 1 1>;
-			prefetch-data = <1>;
-			prefetch-instr = <1>;
 		};
 
 		mmc: dwmmc0@ff704000 {
@@ -657,7 +635,7 @@
 			fifo-depth = <0x400>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-			clocks = <&l4_mp_clk>, <&sdmmc_clk_divided>;
+			clocks = <&l4_mp_clk>, <&sdmmc_clk>;
 			clock-names = "biu", "ciu";
 		};
 
@@ -675,11 +653,6 @@
 			num-cs = <4>;
 			clocks = <&spi_m_clk>;
 			status = "disabled";
-		};
-
-		scu: snoop-control-unit@fffec000 {
-			compatible = "arm,cortex-a9-scu";
-			reg = <0xfffec000 0x100>;
 		};
 
 		spi1: spi@fff01000 {
@@ -761,7 +734,6 @@
 			#reset-cells = <1>;
 			compatible = "altr,rst-mgr";
 			reg = <0xffd05000 0x1000>;
-			altr,modrst-offset = <0x10>;
 		};
 
 		usbphy0: usbphy@0 {

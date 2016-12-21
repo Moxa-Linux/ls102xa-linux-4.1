@@ -1025,7 +1025,7 @@ static void nmk_gpio_dbg_show_one(struct seq_file *s,
 		int pullidx = 0;
 
 		if (pull)
-			pullidx = data_out ? 1 : 2;
+			pullidx = data_out ? 2 : 1;
 
 		seq_printf(s, " gpio-%-3d (%-20.20s) in  %s %s",
 			   gpio,
@@ -2029,9 +2029,9 @@ static int nmk_pinctrl_probe(struct platform_device *pdev)
 	npct->dev = &pdev->dev;
 
 	npct->pctl = pinctrl_register(&nmk_pinctrl_desc, &pdev->dev, npct);
-	if (IS_ERR(npct->pctl)) {
+	if (!npct->pctl) {
 		dev_err(&pdev->dev, "could not register Nomadik pinctrl driver\n");
-		return PTR_ERR(npct->pctl);
+		return -EINVAL;
 	}
 
 	/* We will handle a range of GPIO pins */

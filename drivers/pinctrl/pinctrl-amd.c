@@ -48,17 +48,6 @@ static int amd_gpio_direction_input(struct gpio_chip *gc, unsigned offset)
 
 	spin_lock_irqsave(&gpio_dev->lock, flags);
 	pin_reg = readl(gpio_dev->base + offset * 4);
-	/*
-	 * Suppose BIOS or Bootloader sets specific debounce for the
-	 * GPIO. if not, set debounce to be  2.75ms and remove glitch.
-	*/
-	if ((pin_reg & DB_TMR_OUT_MASK) == 0) {
-		pin_reg |= 0xf;
-		pin_reg |= BIT(DB_TMR_OUT_UNIT_OFF);
-		pin_reg |= DB_TYPE_REMOVE_GLITCH << DB_CNTRL_OFF;
-		pin_reg &= ~BIT(DB_TMR_LARGE_OFF);
-	}
-
 	pin_reg &= ~BIT(OUTPUT_ENABLE_OFF);
 	writel(pin_reg, gpio_dev->base + offset * 4);
 	spin_unlock_irqrestore(&gpio_dev->lock, flags);
@@ -331,15 +320,6 @@ static void amd_gpio_irq_enable(struct irq_data *d)
 
 	spin_lock_irqsave(&gpio_dev->lock, flags);
 	pin_reg = readl(gpio_dev->base + (d->hwirq)*4);
-	/*
-		Suppose BIOS or Bootloader sets specific debounce for the
-		GPIO. if not, set debounce to be  2.75ms.
-	*/
-	if ((pin_reg & DB_TMR_OUT_MASK) == 0) {
-		pin_reg |= 0xf;
-		pin_reg |= BIT(DB_TMR_OUT_UNIT_OFF);
-		pin_reg &= ~BIT(DB_TMR_LARGE_OFF);
-	}
 	pin_reg |= BIT(INTERRUPT_ENABLE_OFF);
 	pin_reg |= BIT(INTERRUPT_MASK_OFF);
 	writel(pin_reg, gpio_dev->base + (d->hwirq)*4);
@@ -789,9 +769,9 @@ static int amd_gpio_probe(struct platform_device *pdev)
 	amd_pinctrl_desc.name = dev_name(&pdev->dev);
 	gpio_dev->pctrl = pinctrl_register(&amd_pinctrl_desc,
 					&pdev->dev, gpio_dev);
-	if (IS_ERR(gpio_dev->pctrl)) {
+	if (!gpio_dev->pctrl) {
 		dev_err(&pdev->dev, "Couldn't register pinctrl driver\n");
-		return PTR_ERR(gpio_dev->pctrl);
+		return -ENODEV;
 	}
 
 	ret = gpiochip_add(&gpio_dev->gc);
