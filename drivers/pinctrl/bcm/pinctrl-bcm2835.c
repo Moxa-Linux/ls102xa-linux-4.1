@@ -786,7 +786,7 @@ static int bcm2835_pctl_dt_node_to_map(struct pinctrl_dev *pctldev,
 		}
 		if (num_pulls) {
 			err = of_property_read_u32_index(np, "brcm,pull",
-					(num_funcs > 1) ? i : 0, &pull);
+					(num_pulls > 1) ? i : 0, &pull);
 			if (err)
 				goto out;
 			err = bcm2835_pctl_dt_node_to_map_pull(pc, np, pin,
@@ -1036,9 +1036,9 @@ static int bcm2835_pinctrl_probe(struct platform_device *pdev)
 	}
 
 	pc->pctl_dev = pinctrl_register(&bcm2835_pinctrl_desc, dev, pc);
-	if (IS_ERR(pc->pctl_dev)) {
+	if (!pc->pctl_dev) {
 		gpiochip_remove(&pc->gpio_chip);
-		return PTR_ERR(pc->pctl_dev);
+		return -EINVAL;
 	}
 
 	pc->gpio_range = bcm2835_pinctrl_gpio_range;
