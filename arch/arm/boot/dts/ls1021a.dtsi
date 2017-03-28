@@ -525,18 +525,6 @@
 			#interrupt-cells = <2>;
 		};
 
-		gpio-keys {
-			compatible = "gpio-keys";
-			reset-key {
-				label = "Reset key";
-				gpios = <&gpio4 26 1>;
-				linux,code = <69>;
-				default-state = "on";
-			};
-		};
-
-
-
 		ftm0: ftm0@29d0000 {
 			compatible = "fsl,ftm-alarm";
 			reg = <0x0 0x29d0000 0x0 0x10000>;
