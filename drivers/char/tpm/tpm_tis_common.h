@@ -131,3 +131,4 @@ static inline void write_tpm_dword(struct tpm_chip *chip, u32 addr, u32 value)
 
 int tpm_tis_init_generic(struct device *dev, struct tpm_chip *chip, unsigned int irq, bool enable_interrupts, bool itpm);
 #endif
+

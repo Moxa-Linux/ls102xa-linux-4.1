@@ -6,7 +6,6 @@
 #include <linux/freezer.h>
 #include "tpm.h"
 #include "tpm_tis_common.h"
-
 /* Before we attempt to access the TPM we must see that the valid bit is set.
  * The specification says that this bit is 0 at reset and remains 0 until the
  * 'TPM has gone through its self test and initialization and has established
@@ -136,7 +135,7 @@ static int recv_data(struct tpm_chip *chip, u8 *buf, size_t count)
 	       == 0) {
 		burstcnt = get_burstcount(chip);
 		transfer_size = min_t (size_t, (count - size), burstcnt);
-//		pr_err("size %d count %d bct %d tsize %d\n", size, count, burstcnt, transfer_size);
+		pr_err("size %d count %d bct %d tsize %d\n", size, count, burstcnt, transfer_size);
 		read_tpm_bytes(chip, TPM_DATA_FIFO(chip->vendor.locality), transfer_size, &buf[size]);
 		size += transfer_size;
 	}
@@ -529,9 +528,9 @@ int tpm_tis_init_generic(struct device *dev, struct tpm_chip *chip, unsigned int
 	rc = tpm2_probe(chip);
 	if (rc)
 		goto out_err;
-//	pr_err("DID VID %x\n", vendor);
+	pr_err("DID VID %x\n", vendor);
 	read_tpm_dword(chip, TPM_DID_VID(0), &vendor);
-//	pr_err("DID VID %x\n", vendor);
+	pr_err("DID VID %x\n", vendor);
 	chip->vendor.manufacturer_id = vendor;
 	read_tpm_byte(chip, TPM_RID(0), &rid);
 
@@ -698,3 +697,4 @@ out_err:
 	return rc;
 }
 EXPORT_SYMBOL(tpm_tis_init_generic);
+
