@@ -98,7 +98,7 @@
 		str_led {
 			label = "UC8410A:RED:PROG";
 			gpios = <&gpio1 16 0>;
-			linux,default-trigger = "mmc0";
+			default-state = "off";
 		};
 
 		sw_ready {
