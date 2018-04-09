@@ -233,8 +233,6 @@ static void option_instat_callback(struct urb *urb);
 #define BANDRICH_PRODUCT_1011			0x1011
 #define BANDRICH_PRODUCT_1012			0x1012
 
-#define QUALCOMM_VENDOR_ID			0x05C6
-
 #define SIERRA_VENDOR_ID			0x1199
 
 #define CMOTECH_VENDOR_ID			0x16d8
@@ -475,9 +473,23 @@ static void option_instat_callback(struct urb *urb);
 #define YUGA_PRODUCT_CLU516			0x360C
 #define YUGA_PRODUCT_CLU528			0x360D
 #define YUGA_PRODUCT_CLU526			0x360F
+
+#define QUALCOMM_VENDOR_ID			0x05C6
+/* These Quectel products use Qualcomm's vendor ID */
+#define QUECTEL_PRODUCT_UC20			0x9003
+#define QUECTEL_PRODUCT_UC15			0x9090
+/* These u-blox products use Qualcomm's vendor ID */
+#define UBLOX_PRODUCT_R410M			0x90b2
 /* These Yuga products use Qualcomm's vendor ID */
+#define YUGA_PRODUCT_9X07			0x9025
 #define YUGA_PRODUCT_CLM920_NC5		0x9625
 
+#define QUECTEL_VENDOR_ID			0x2c7c
+/* These Quectel products use Quectel's vendor ID */
+#define QUECTEL_PRODUCT_EC21			0x0121
+#define QUECTEL_PRODUCT_EC25			0x0125
+#define QUECTEL_PRODUCT_BG96			0x0296
+#define QUECTEL_PRODUCT_EP06			0x0306
 
 /* Viettel products */
 #define VIETTEL_VENDOR_ID			0x2262
@@ -670,8 +682,8 @@ static const struct option_blacklist_info cinterion_rmnet2_blacklist = {
 	.reserved = BIT(4) | BIT(5),
 };
 
-static const struct option_blacklist_info yuga_clm920_nc5_blacklist = {
-	.reserved = BIT(1) | BIT(4),
+static const struct option_blacklist_info YUGA_9X07_blacklist = {
+	.reserved = BIT(0) | BIT(1) | BIT(4),
 };
 
 static const struct usb_device_id option_ids[] = {
@@ -1174,18 +1186,26 @@ static const struct usb_device_id option_ids[] = {
 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x6613)}, /* Onda H600/ZTE MF330 */
 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0023)}, /* ONYX 3G device */
 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9000)}, /* SIMCom SIM5218 */
-	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9003)}, /* QUECTEL U20 */
+	/* Yuga products use Qualcomm vendor ID */
 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9025), /* YUGA CLM920-CN3 */
+	  .driver_info = (kernel_ulong_t)&YUGA_9X07_blacklist},
+	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9625), /* YUGA CLM920-NC5 */
+	  .driver_info = (kernel_ulong_t)&YUGA_9X07_blacklist},
+	/* Quectel products using Qualcomm vendor ID */
+	{ USB_DEVICE(QUALCOMM_VENDOR_ID, QUECTEL_PRODUCT_UC15)},
+	{ USB_DEVICE(QUALCOMM_VENDOR_ID, QUECTEL_PRODUCT_UC20),
 	  .driver_info = (kernel_ulong_t)&net_intf4_blacklist },
 	{ USB_DEVICE_INTERFACE_CLASS(SIERRA_VENDOR_ID, 0x68c0, 0xff),
 	  .driver_info = (kernel_ulong_t)&sierra_mc73xx_blacklist }, /* MC73xx */
 	{ USB_DEVICE_INTERFACE_CLASS(SIERRA_VENDOR_ID, 0x9041, 0xff),
 	  .driver_info = (kernel_ulong_t)&sierra_mc73xx_blacklist }, /* MC7305/MC7355 */
+	/* Quectel products using Quectel vendor ID */
+	{ USB_DEVICE(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC21),
+	  .driver_info = (kernel_ulong_t)&net_intf4_blacklist },
+	{ USB_DEVICE(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC25),
+	  .driver_info = (kernel_ulong_t)&net_intf4_blacklist },
 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9003), /* Quectel UC20 */
 	  .driver_info = (kernel_ulong_t)&net_intf4_blacklist },
-	/* Yuga products use Qualcomm vendor ID */
-	{ USB_DEVICE(QUALCOMM_VENDOR_ID, YUGA_PRODUCT_CLM920_NC5),
-	  .driver_info = (kernel_ulong_t)&yuga_clm920_nc5_blacklist },
 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6003),
