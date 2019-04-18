@@ -151,6 +151,7 @@
 		dcfg: dcfg@1ee0000 {
 			compatible = "fsl,ls1021a-dcfg";
 			reg = <0x0 0x1ee0000 0x0 0x10000>;
+			big-endian;
 		};
 
 		qspi: quadspi@1550000 {
