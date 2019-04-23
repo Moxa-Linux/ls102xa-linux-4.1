@@ -147,8 +147,8 @@ Example:
 ### Product kernel configuration:
 There following are the list of product kernel configuration files. defconfig is placed in the arch/arm/configs folder, dts file is placed in arch/arm/boot/dts folder, its file is placed in its folder.
 
-##### UC-8410a series
-* models: UC-8410a-LX
+##### UC-8410A series
+* models: UC-8410A-LX
 * defconfig: uc8410a_defconfig
 * dts: moxa-uc8410a.dts
 
