@@ -475,6 +475,9 @@ static void option_instat_callback(struct urb *urb);
 #define YUGA_PRODUCT_CLU516			0x360C
 #define YUGA_PRODUCT_CLU528			0x360D
 #define YUGA_PRODUCT_CLU526			0x360F
+/* These Yuga products use Qualcomm's vendor ID */
+#define YUGA_PRODUCT_CLM920_NC5		0x9625
+
 
 /* Viettel products */
 #define VIETTEL_VENDOR_ID			0x2262
@@ -665,6 +668,10 @@ static const struct option_blacklist_info telit_le922_blacklist_usbcfg3 = {
 
 static const struct option_blacklist_info cinterion_rmnet2_blacklist = {
 	.reserved = BIT(4) | BIT(5),
+};
+
+static const struct option_blacklist_info yuga_clm920_nc5_blacklist = {
+	.reserved = BIT(1) | BIT(4),
 };
 
 static const struct usb_device_id option_ids[] = {
@@ -1176,6 +1183,9 @@ static const struct usb_device_id option_ids[] = {
 	  .driver_info = (kernel_ulong_t)&sierra_mc73xx_blacklist }, /* MC7305/MC7355 */
 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9003), /* Quectel UC20 */
 	  .driver_info = (kernel_ulong_t)&net_intf4_blacklist },
+	/* Yuga products use Qualcomm vendor ID */
+	{ USB_DEVICE(QUALCOMM_VENDOR_ID, YUGA_PRODUCT_CLM920_NC5),
+	  .driver_info = (kernel_ulong_t)&yuga_clm920_nc5_blacklist },
 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6003),
