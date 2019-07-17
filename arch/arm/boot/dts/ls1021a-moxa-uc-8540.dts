@@ -266,10 +266,10 @@
 	/* clock-frequency = <400000>; */
 	clock-frequency = <100000>;
 
-	//tpm@20 {
-	//	compatible = "infineon,slb9635tt";
-	//	reg = <0x20>;
-	//};
+	tpm@20 {
+		compatible = "infineon,slb9635tt";
+		reg = <0x20>;
+	};
 
 	///* module power
 	//   sim card slot */
