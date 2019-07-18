@@ -14,7 +14,6 @@ scripts/Makefile.modbuiltin /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scr
 scripts/Makefile.modinst /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
 scripts/Makefile.modpost /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
 scripts/Makefile.modsign /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
-scripts/Makefile.ubsan /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
 scripts/checkincludes.pl /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
 scripts/checkstack.pl /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
 scripts/checkversion.pl /usr/lib/linux-kbuild-4.1.0-ltsi-rt-moxa-ls102xa/scripts/
