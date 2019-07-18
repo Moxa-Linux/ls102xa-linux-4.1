@@ -1,0 +1,5 @@
+ls102xa-linux-4.1 (4.1.36+1.0.0) jessie; urgency=medium
+
+  * feat: add ls102xa kernel packages
+
+ -- Alif Chen <alif.chen@moxa.com>  Wed, 17 Jul 2019 17:57:17 +0800
