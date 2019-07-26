@@ -132,6 +132,15 @@
 		};
 	};
 
+    gpio-keys {
+        compatible = "gpio-keys";
+        reset-key {
+            label = "Reset key";
+            gpios = <&gpio4 20 1>;
+            linux,code = <69>;
+            default-state = "on";
+        };
+    };
 };
 
 &enet0 {
