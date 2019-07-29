@@ -125,92 +125,22 @@
 			default-state = "off";
 		};
 
-//		sw_ready {
-//			label = "UC8580:GREEN:SWRDY";
-//			gpios = <&gpio4 16 0>;
-//			default-state = "on";
-//		};
-//
-//		signal_led_0_0 {
-//			label = "UC8580:GREEN:CEL0_0";
-//			gpios = <&mled 9 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_0_1 {
-//			label = "UC8580:GREEN:CEL0_1";
-//			gpios = <&mled 10 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_0_2 {
-//			label = "UC8580:GREEN:CEL0_2";
-//			gpios = <&mled 11 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_1_0 {
-//			label = "UC8580:GREEN:CEL1_0";
-//			gpios = <&mled 6 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_1_1 {
-//			label = "UC8580:GREEN:CEL1_1";
-//			gpios = <&mled 7 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_1_2 {
-//			label = "UC8580:GREEN:CEL1_2";
-//			gpios = <&mled 8 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_2_0 {
-//			label = "UC8580:GREEN:CEL2_0";
-//			gpios = <&mled 3 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_2_1 {
-//			label = "UC8580:GREEN:CEL2_1";
-//			gpios = <&mled 4 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_2_2 {
-//			label = "UC8580:GREEN:CEL2_2";
-//			gpios = <&mled 5 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_3_0 {
-//			label = "UC8580:GREEN:CEL3_0";
-//			gpios = <&mled 0 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_3_1 {
-//			label = "UC8580:GREEN:CEL3_1";
-//			gpios = <&mled 1 0>;
-//			default-state = "off";
-//		};
-//
-//		signal_led_3_2 {
-//			label = "UC8580:GREEN:CEL3_2";
-//			gpios = <&mled 2 0>;
-//			default-state = "off";
-//		};
-//
-//		prog_led0 {
-//			label = "UC8580:RED:PROG0";
-//			gpios = <&mled 15 0>;
-//			default-state = "off";
-//		};
-		
+		sw_ready {
+			label = "UC8540:GREEN:SWRDY";
+			gpios = <&gpio4 16 0>;
+			default-state = "on";
+		};
 	};
 
+    gpio-keys {
+        compatible = "gpio-keys";
+        reset-key {
+            label = "Reset key";
+            gpios = <&gpio4 20 1>;
+            linux,code = <69>;
+            default-state = "on";
+        };
+    };
 };
 
 &enet0 {
@@ -266,10 +196,10 @@
 	/* clock-frequency = <400000>; */
 	clock-frequency = <100000>;
 
-	//tpm@20 {
-	//	compatible = "infineon,slb9635tt";
-	//	reg = <0x20>;
-	//};
+	tpm@20 {
+		compatible = "infineon,slb9635tt";
+		reg = <0x20>;
+	};
 
 	///* module power
 	//   sim card slot */
