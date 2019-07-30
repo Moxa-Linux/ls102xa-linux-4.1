@@ -51,7 +51,6 @@ ifeq ($(DEB_HOST_ARCH), armhf)
 	@for number in $(MOXA_DTBS); do \
 		cp arch/arm/boot/dts/$$number.dtb $(uImage_DTBS_OUTDIR)/$$number.dtb; \
 	done
-	#mkimage -f its/${MOXA_ITBS}.its $(ITBS_OUTDIR)/${MOXA_ITBS}.itb;
 
 # Strip & install kernel modules
 	$(MAKE) modules_install \
