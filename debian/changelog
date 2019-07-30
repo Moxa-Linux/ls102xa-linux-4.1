@@ -1,3 +1,9 @@
+ls102xa-linux-4.1 (4.1.36+1.0.1) jessie; urgency=medium
+
+  * fix: break uc8540-kernel uc8540-modules in uc8540-syskernel 
+
+ -- Alif Chen <alif.chen@moxa.com>  Tue, 30 Jul 2019 15:04:12 +0800
+
 ls102xa-linux-4.1 (4.1.36+1.0.0) jessie; urgency=medium
 
   * feat: add ls102xa kernel packages
