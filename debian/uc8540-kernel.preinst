@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
 install|upgrade)
-	P1_FS=/var/tmp/p1
+	P1_FS=/boot
 
 	mkdir -p "${P1_FS}"
 	# Check the environment is in VM or physical target machine.

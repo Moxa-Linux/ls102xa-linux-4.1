@@ -4,7 +4,7 @@ set -e
 
 case "$1" in
 configure)
-	BOOT_FOLDER="/var/tmp/p1"
+	BOOT_FOLDER="/boot"
 
 	# Check if the environment is physical target machine.
 	if cat /proc/cmdline | grep -q "mmcblk"; then
