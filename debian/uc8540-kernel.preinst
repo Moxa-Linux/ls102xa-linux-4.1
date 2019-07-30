@@ -21,6 +21,7 @@ install|upgrade)
 
 		mount ${SD_NODE}p1 ${P1_FS} >/dev/null 2>&1
 		rm -f ${P1_FS}/uImage
+		rm -f ${P1_FS}/*dtb
 		sync
 	fi
 	;;
