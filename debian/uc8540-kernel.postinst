@@ -4,8 +4,6 @@ set -e
 
 case "$1" in
 configure)
-	BOOT_FOLDER="/boot"
-
 	# Check if the environment is physical target machine.
 	if cat /proc/cmdline | grep -q "mmcblk"; then
 		ROOT_PART="$(cat /proc/cmdline | sed -e 's/^.*root=//' -e 's/ .*$//')"
