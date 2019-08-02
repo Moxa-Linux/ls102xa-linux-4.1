@@ -36,9 +36,8 @@ Package: uc8540-kernel
 Architecture: armhf
 Depends: ${misc:Depends},
          uc8540-modules (= ${binary:Version})
-Conflicts: uc8540-syskernel (= ${binary:Version})
-Replaces: uc8540-syskernel (= ${binary:Version})
-Breaks: uc8540-syskernel (= ${binary:Version})
+Breaks: uc8540-system (<= 1.3.0), uc8540-syskernel (<= 1.3.0)
+Replaces: uc8540-system (<= 1.3.0), uc8540-syskernel (<= 1.3.0)
 Description: ls102xa Flattened Image
  Flattened image includes Linux kernel image and device trees.
  Device tree describesthe hardware components on the device including
@@ -49,9 +48,8 @@ Package: uc8540-modules
 Architecture: armhf
 Depends: ${misc:Depends},
          kmod
-Conflicts: uc8540-syskernel (= ${binary:Version})
-Replaces: uc8540-syskernel (= ${binary:Version})
-Breaks: uc8540-syskernel (= ${binary:Version})
+Breaks: uc8540-system (<= 1.3.0), uc8540-syskernel (<= 1.3.0)
+Replaces: uc8540-system (<= 1.3.0), uc8540-syskernel (<= 1.3.0)
 Description: ls102xa standard kernel modules
  The Linux standard kernel modules for UC-8540 Linux kernel image.
  This package contains all kernel modules for ls102xa CIP Linux 4.4.
