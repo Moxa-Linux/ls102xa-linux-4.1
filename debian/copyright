@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: ls102xa-linux-4.4
-Source: https://github.com/Moxa-Linux/ls102xa-linux-4.4
+Upstream-Name: ls102xa-linux-4.1
+Source: https://github.com/Moxa-Linux/ls102xa-linux-4.1
 
 Files: *
 Copyright: 1991-2012 Linus Torvalds and many others

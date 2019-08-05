@@ -339,8 +339,7 @@
 	bus-num = <0>;
 
 	tpm_spi_tis@0 {
-    	compatible = "tcg,tpm_spi_tis";
-		//compatible ="infineon,slb9670";
+		compatible = "tcg,tpm_spi_tis";
     	spi-max-frequency = <0x1388>;
     	reg = <0x0>;
     };
