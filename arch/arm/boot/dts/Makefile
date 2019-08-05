@@ -318,7 +318,7 @@ dtb-$(CONFIG_SOC_LS1021A) += \
 	ls1021a-twr.dtb \
 	moxa-uc8580.dtb \
 	moxa-uc8580-dvt.dtb \
-	moxa-uc8540.dtb
+	ls1021a-moxa-uc-8540.dtb
 dtb-$(CONFIG_SOC_VF610) += \
 	vf500-colibri-eval-v3.dtb \
 	vf610-colibri-eval-v3.dtb \
