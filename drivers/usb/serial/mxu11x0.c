@@ -40,7 +40,7 @@
 #include <linux/usb.h>
 
 #if(LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18))
-#include "usb-serial.h"
+#include <linux/usb/serial/usb-serial.h>
 #else
 #include <linux/usb/serial.h>
 #endif
@@ -51,13 +51,13 @@
 #include <linux/sched/signal.h>
 #endif
 
-#include "mxu11x0.h"
-#include "mxu1110_fw.h"
-#include "mxu1130_fw.h"
-#include "mxu1131_fw.h"
-#include "mxu1150_fw.h"
-#include "mxu1151_fw.h"
-#include "mxu3001_fw.h"
+#include <linux/usb/serial/mxu11x0.h>
+#include <linux/usb/serial/mxu1110_fw.h>
+#include <linux/usb/serial/mxu1130_fw.h>
+#include <linux/usb/serial/mxu1131_fw.h>
+#include <linux/usb/serial/mxu1150_fw.h>
+#include <linux/usb/serial/mxu1151_fw.h>
+#include <linux/usb/serial/mxu3001_fw.h>
 
 /* Defines */
 
