@@ -8,8 +8,19 @@
  */
 
 #include <asm/mach/arch.h>
+#include <linux/clk-provider.h>
+#include <linux/clockchips.h>
+#include <linux/clocksource.h>
 
 #include "common.h"
+
+static void __init ls1021a_init_time(void)
+{
+	of_clk_init(NULL);
+	clocksource_of_init();
+	tick_setup_hrtimer_broadcast();
+}
+
 
 static const char * const ls1021a_dt_compat[] __initconst = {
 	"fsl,ls1021a",
@@ -18,5 +29,6 @@ static const char * const ls1021a_dt_compat[] __initconst = {
 
 DT_MACHINE_START(LS1021A, "Freescale LS1021A")
 	.smp		= smp_ops(ls1021a_smp_ops),
+	.init_time	= ls1021a_init_time,
 	.dt_compat	= ls1021a_dt_compat,
 MACHINE_END
