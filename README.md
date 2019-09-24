@@ -38,8 +38,7 @@ The detail model support list, default kernel configuration, dts file, its file 
 ```
 Example:
 ```
-# make uc8540_defconfig
-# make uc8580_defconfig
+# make ls102xa_defconfig
 ```
 
 #### 2. Compile kernel and create uImage file.
@@ -86,14 +85,14 @@ Example:
 To upload kernel modules:
 Example:
 ```
-# scp -r /tmp/lib/modules/4.1.0-ltsi/kernel/ moxa@192.168.3.100:/tmp
-# scp /tmp/lib/modules/4.1.0-ltsi/modules.* moxa@192.168.3.100:/tmp
+# scp -r /tmp/lib/modules/4.1.0-ltsi-rt-moxa-ls102xa/kernel/ moxa@192.168.3.100:/tmp
+# scp /tmp/lib/modules/4.1.0-ltsi-rt-moxa-ls102xa/modules.* moxa@192.168.3.100:/tmp
 ```
 
 To upload uImage and dtb files:
 ```
 # scp arch/arm/boot/uImage moxa@192.168.3.100:/tmp
-# scp arch/arm/boot/moxa-uc8410a.dtb moxa@192.168.3.100:/tmp
+# scp arch/arm/boot/moxa-uc8580.dtb moxa@192.168.3.100:/tmp
 ```
 
 #### 2. Replace the kernel modules on the device with new files
@@ -103,9 +102,9 @@ Backup the original kernel modules and update kernel modules with new files
 Example:
 ```
 # mv /lib/modules/4.1.0-ltsi/ /lib/modules/4.1.0-ltsi_bak/
-# mkdir -p /lib/modules/4.1.0-ltsi/
-# cp -arf /tmp/kernel/ /lib/modules/4.1.0-ltsi/
-# cp -arf /tmp/modules.* /lib/modules/4.1.0-ltsi/
+# mkdir -p /lib/modules/4.1.0-ltsi-rt-moxa-ls102xa/
+# cp -arf /tmp/kernel/ /lib/modules/4.1.0-ltsi-rt-moxa-ls102xa/
+# cp -arf /tmp/modules.* /lib/modules/4.1.0-ltsi-rt-moxa-ls102xa/
 # sync
 ```
 
@@ -130,9 +129,9 @@ Backup the original kernel file and update it with new file
 
 Example:
 ```
-# mv moxa-uc8410a.dtb moxa-uc8410a.dtb_bak
+# mv moxa-uc8580.dtb moxa-uc8580.dtb_bak
 # mv uImage uImage_bak
-# cp /tmp/moxa-uc8410a.dtb .
+# cp /tmp/moxa-uc8580.dtb .
 # cp /tmp/uImage .
 # sync
 ```
@@ -154,12 +153,12 @@ There following are the list of product kernel configuration files. defconfig is
 
 ##### UC-8540 series
 * models: UC-8540-LX
-* defconfig: uc8540_defconfig
-* dts: moxa-uc8540.dts
+* defconfig: ls102xa_defconfig
+* dts: ls1021a-moxa-uc-8540.dts
 
 ##### UC-8580 series
 * models: UC-8580-LX
-* defconfig: uc8580_defconfig
+* defconfig: ls102xa_defconfig
 * dts: moxa-uc8580.dts
 
 ---
