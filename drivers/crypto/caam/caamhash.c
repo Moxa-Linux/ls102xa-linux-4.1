@@ -134,6 +134,15 @@ struct caam_hash_state {
 	int current_buf;
 };
 
+struct caam_export_state {
+        u8 buf[CAAM_MAX_HASH_BLOCK_SIZE];
+        u8 caam_ctx[MAX_CTX_LEN];
+        int buflen;
+        int (*update)(struct ahash_request *req);
+        int (*final)(struct ahash_request *req);
+        int (*finup)(struct ahash_request *req);
+};
+
 /* Common job descriptor seq in/out ptr routines */
 
 /* Map state->caam_ctx, and append seq_out_ptr command that points to it */
@@ -1626,6 +1635,7 @@ static struct caam_hash_template driver_hash[] = {
 			.setkey = ahash_setkey,
 			.halg = {
 				.digestsize = SHA1_DIGEST_SIZE,
+				.statesize = sizeof(struct caam_export_state),
 				},
 			},
 		.alg_type = OP_ALG_ALGSEL_SHA1,
@@ -1647,6 +1657,7 @@ static struct caam_hash_template driver_hash[] = {
 			.setkey = ahash_setkey,
 			.halg = {
 				.digestsize = SHA224_DIGEST_SIZE,
+				.statesize = sizeof(struct caam_export_state),
 				},
 			},
 		.alg_type = OP_ALG_ALGSEL_SHA224,
@@ -1668,6 +1679,7 @@ static struct caam_hash_template driver_hash[] = {
 			.setkey = ahash_setkey,
 			.halg = {
 				.digestsize = SHA256_DIGEST_SIZE,
+				.statesize = sizeof(struct caam_export_state),
 				},
 			},
 		.alg_type = OP_ALG_ALGSEL_SHA256,
@@ -1689,6 +1701,7 @@ static struct caam_hash_template driver_hash[] = {
 			.setkey = ahash_setkey,
 			.halg = {
 				.digestsize = SHA384_DIGEST_SIZE,
+				.statesize = sizeof(struct caam_export_state),
 				},
 			},
 		.alg_type = OP_ALG_ALGSEL_SHA384,
@@ -1710,6 +1723,7 @@ static struct caam_hash_template driver_hash[] = {
 			.setkey = ahash_setkey,
 			.halg = {
 				.digestsize = SHA512_DIGEST_SIZE,
+				.statesize = sizeof(struct caam_export_state),
 				},
 			},
 		.alg_type = OP_ALG_ALGSEL_SHA512,
@@ -1731,6 +1745,7 @@ static struct caam_hash_template driver_hash[] = {
 			.setkey = ahash_setkey,
 			.halg = {
 				.digestsize = MD5_DIGEST_SIZE,
+				.statesize = sizeof(struct caam_export_state),
 				},
 			},
 		.alg_type = OP_ALG_ALGSEL_MD5,
@@ -1862,6 +1877,7 @@ caam_hash_alloc(struct caam_hash_template *template,
 			 template->name);
 		snprintf(alg->cra_driver_name, CRYPTO_MAX_ALG_NAME, "%s",
 			 template->driver_name);
+		t_alg->ahash_alg.setkey = NULL;
 	}
 	alg->cra_module = THIS_MODULE;
 	alg->cra_init = caam_hash_cra_init;
@@ -1929,8 +1945,9 @@ static int __init caam_algapi_hash_init(void)
 
 		err = crypto_register_ahash(&t_alg->ahash_alg);
 		if (err) {
-			pr_warn("%s alg registration failed\n",
-				t_alg->ahash_alg.halg.base.cra_driver_name);
+			pr_warn("%s alg registration failed: %d\n",
+				t_alg->ahash_alg.halg.base.cra_driver_name,
+				err);
 			kfree(t_alg);
 		} else
 			list_add_tail(&t_alg->entry, &hash_list);
@@ -1946,8 +1963,9 @@ static int __init caam_algapi_hash_init(void)
 
 		err = crypto_register_ahash(&t_alg->ahash_alg);
 		if (err) {
-			pr_warn("%s alg registration failed\n",
-				t_alg->ahash_alg.halg.base.cra_driver_name);
+			pr_warn("%s alg registration failed: %d\n",
+				t_alg->ahash_alg.halg.base.cra_driver_name,
+				err);
 			kfree(t_alg);
 		} else
 			list_add_tail(&t_alg->entry, &hash_list);

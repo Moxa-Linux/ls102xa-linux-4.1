@@ -681,6 +681,8 @@ isl1208_probe(struct i2c_client *client, const struct i2c_device_id *id)
 	if (rc)
 		return rc;
 
+	rtc->uie_unsupported = 1;
+
 	return 0;
 }
 

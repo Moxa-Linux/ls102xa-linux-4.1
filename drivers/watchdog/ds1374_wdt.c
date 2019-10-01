@@ -10,7 +10,7 @@
 #define DS1374_REG_WDALM0	0x04 /* Watchdog/Alarm */
 #define DS1374_REG_CR		0x07 /* Control */
 #define DS1374_REG_CR_AIE	0x01 /* Alarm Int. Enable */
-//#define DS1374_REG_CR_WDSTR	0x08
+#define DS1374_REG_CR_WDSTR	0x08
 #define DS1374_REG_CR_WDALM	0x20 /* 1=Watchdog, 0=Alarm */
 #define DS1374_REG_CR_WACE	0x40 /* WD/Alarm counter enable */
 
@@ -83,7 +83,7 @@ static int ds1374_wdt_settimeout(unsigned int timeout)
 
 	/* Enable watchdog timer */
 	cr |= DS1374_REG_CR_WACE | DS1374_REG_CR_WDALM;
-	//cr &= ~DS1374_REG_CR_WDSTR;
+	cr &= ~DS1374_REG_CR_WDSTR;
 	cr &= ~DS1374_REG_CR_AIE;
 
 	ret = i2c_smbus_write_byte_data(save_client, DS1374_REG_CR, cr);
@@ -265,11 +265,23 @@ static long ds1374_wdt_unlocked_ioctl(struct file *file, unsigned int cmd,
 static int ds1374_wdt_notify_sys(struct notifier_block *this,
 			unsigned long code, void *unused)
 {
+	/* Workaround : reset register of watchdog */
+	int ret = -ENOIOCTLCMD;
+	int cr;
+	/* Workaround : reset register of watchdog */
+
 	/* use ds1374 reboot instead of CPU watchdog reboot */
 	if (code == SYS_HALT) {
 		/* Disable Watchdog */
                 ds1374_wdt_disable(); 
 	} else if (code == SYS_RESTART) {
+		/* Workaround : reset register of watchdog */
+		cr |= DS1374_REG_CR_WACE | DS1374_REG_CR_WDALM;
+		cr &= ~DS1374_REG_CR_WDSTR;
+		cr &= ~DS1374_REG_CR_AIE;
+
+		ret = i2c_smbus_write_byte_data(save_client, DS1374_REG_CR, cr);
+		/* Workaround : reset register of watchdog */
 		/* one second */
 		ds1374_wdt_settimeout(1*4096);
 		ds1374_wdt_ping();

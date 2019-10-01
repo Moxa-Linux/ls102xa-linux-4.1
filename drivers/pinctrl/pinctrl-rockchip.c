@@ -1274,9 +1274,9 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
 		return ret;
 
 	info->pctl_dev = pinctrl_register(ctrldesc, &pdev->dev, info);
-	if (IS_ERR(info->pctl_dev)) {
+	if (!info->pctl_dev) {
 		dev_err(&pdev->dev, "could not register pinctrl driver\n");
-		return PTR_ERR(info->pctl_dev);
+		return -EINVAL;
 	}
 
 	for (bank = 0; bank < info->ctrl->nr_banks; ++bank) {

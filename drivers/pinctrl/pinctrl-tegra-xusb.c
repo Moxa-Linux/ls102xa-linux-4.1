@@ -909,9 +909,9 @@ static int tegra_xusb_padctl_probe(struct platform_device *pdev)
 	padctl->desc.owner = THIS_MODULE;
 
 	padctl->pinctrl = pinctrl_register(&padctl->desc, &pdev->dev, padctl);
-	if (IS_ERR(padctl->pinctrl)) {
+	if (!padctl->pinctrl) {
 		dev_err(&pdev->dev, "failed to register pincontrol\n");
-		err = PTR_ERR(padctl->pinctrl);
+		err = -ENODEV;
 		goto reset;
 	}
 

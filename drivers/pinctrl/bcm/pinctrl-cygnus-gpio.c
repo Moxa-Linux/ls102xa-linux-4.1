@@ -750,9 +750,9 @@ static int cygnus_gpio_register_pinconf(struct cygnus_gpio *chip)
 	pctldesc->confops = &cygnus_pconf_ops;
 
 	chip->pctl = pinctrl_register(pctldesc, chip->dev, chip);
-	if (IS_ERR(chip->pctl)) {
+	if (!chip->pctl) {
 		dev_err(chip->dev, "unable to register pinctrl device\n");
-		return PTR_ERR(chip->pctl);
+		return -EINVAL;
 	}
 
 	return 0;

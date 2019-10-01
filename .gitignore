@@ -49,10 +49,7 @@ Module.symvers
 /System.map
 /Module.markers
 
-#
-# Debian directory (make deb-pkg)
-#
-/debian/
+/output
 
 #
 # tar directory (make tar*-pkg)
@@ -64,6 +61,7 @@ Module.symvers
 #
 !.gitignore
 !.mailmap
+!.scmversion
 
 #
 # Generated include files
